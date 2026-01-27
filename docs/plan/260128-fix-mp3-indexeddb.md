@@ -19,14 +19,17 @@ Assumptions / Constraints:
 - Performance should be acceptable for a small number of mp3 files (dozens, not thousands).
 
 Implementation:
-- [ ] Review current pad store, IndexedDB usage, and upload flow for mp3 files.
-- [ ] Fix or implement IndexedDB save/load logic so uploaded mp3 files persist and are bound to pads.
-- [ ] Wire UI (upload, pad click) to use loaded blobs/URLs from IndexedDB correctly.
+- [x] Review current pad store, IndexedDB usage, and upload flow for mp3 files.
+- [x] Fix or implement IndexedDB save/load logic so uploaded mp3 files persist and are bound to pads.
+- [x] Wire UI (upload, pad click) to use loaded blobs/URLs from IndexedDB correctly.
 
 Verification:
 - [ ] Tests
-- [ ] Manual checks
-- [ ] Commands executed (record exact commands and results)
+- [x] Manual checks
+- [x] Commands executed (record exact commands and results)
+
+Commands executed:
+- npm run build
 
 Docs updates:
 - [ ] README.md

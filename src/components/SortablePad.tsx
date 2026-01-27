@@ -16,7 +16,7 @@ export const SortablePad: React.FC<SortablePadProps> = ({
   onDeletePad,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: pad.id, disabled: isDeleteMode });
+    useSortable({ id: pad.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -24,8 +24,11 @@ export const SortablePad: React.FC<SortablePadProps> = ({
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div ref={setNodeRef} style={style}>
       <Pad pad={pad} isDeleteMode={isDeleteMode} onDeletePad={onDeletePad} />
+      <span {...attributes} {...listeners}>
+        ☰ 드래그 핸들
+      </span>
     </div>
   );
 };

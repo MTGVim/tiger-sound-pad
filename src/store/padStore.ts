@@ -145,6 +145,11 @@ export const usePadStore = create<PadState>()(
           })
         ),
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          void state.loadAudioFiles();
+        }
+      },
     }
   )
 );
