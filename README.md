@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Tiger Sound Pad
 
-## Getting Started
+간단한 사운드 패드를 제공하는 React + Vite 기반 앱입니다. 각 패드에는 라벨과 아이콘, 오디오를 연결할 수 있으며, 드래그해서 순서를 바꾸거나 삭제할 수 있습니다.
 
-First, run the development server:
+## 개발 서버 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+기본적으로 `http://localhost:5173` 에서 앱을 확인할 수 있습니다(일반적인 Vite 기본 포트).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 주요 기능
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **패드 추가**: `Add New Pad` 버튼으로 새 패드를 추가합니다.
+- **드래그로 순서 변경**: 패드를 드래그하여 가로로 정렬된 리스트의 순서를 바꿀 수 있습니다.
+- **패드 삭제 (휴지통 드롭)**:
+  - 화면 우상단에 둥근 **휴지통 아이콘**이 표시됩니다.
+  - 삭제하고 싶은 패드를 드래그해서 휴지통 위로 가져가면, 브라우저의 기본 **확인/취소 다이얼로그**가 뜹니다.
+  - `확인`을 누르면:
+    - 해당 패드가 화면과 상태(Zustand 스토어)에서 제거되고,
+    - 패드에 연결되어 있던 IndexedDB의 오디오 Blob도 함께 삭제됩니다.
 
-## Learn More
+## 기술 스택
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- React
+- Vite
+- Zustand (상태 관리)
+- @dnd-kit (드래그 앤 드롭)
+- Howler (오디오 재생)
+- idb-keyval (IndexedDB 접근)
