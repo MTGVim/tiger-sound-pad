@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import {
   DndContext,
   closestCenter,
@@ -16,12 +16,16 @@ import {
 import type { Pad as PadType } from "../types/pad";
 import { SortablePad } from "./SortablePad";
 
+const buttonBaseClasses = "flex items-center justify-center w-16 gap-4 h-12 rounded-full shadow-lg border border-gray-500 cursor-pointer transition-colors";
+
 interface PadGridProps {
   pads: PadType[];
   onReorderPads: (newPads: PadType[]) => void;
   onRemovePad: (id: string) => void;
   isDeleteMode: boolean;
   onToggleDeleteMode: () => void;
+  isReorderMode: boolean;
+  onToggleReorderMode: () => void;
 }
 
 interface TrashButtonProps {
@@ -29,16 +33,18 @@ interface TrashButtonProps {
   onToggle: () => void;
 }
 
+const Buttons: React.FC<PropsWithChildren> = ({children}) => {
+  return <div className="flex flex-row gap-3 items-center justify-center fixed top-4 right-4 z-20 h-12">{children}</div>
+}
+
 const TrashButton: React.FC<TrashButtonProps> = ({ isActive, onToggle }) => {
-  const baseClasses =
-    "fixed top-4 right-4 z-20 flex items-center justify-center w-12 h-12 rounded-full shadow-lg border border-gray-500 cursor-pointer transition-colors";
   const colorClasses = isActive ? " bg-red-600" : " bg-gray-800";
 
   return (
     <button
       type="button"
       onClick={onToggle}
-      className={baseClasses + colorClasses}
+      className={buttonBaseClasses + colorClasses}
       aria-pressed={isActive}
       aria-label="Delete pads"
       title={isActive ? "삭제 모드 해제" : "삭제 모드 활성화"}
@@ -63,12 +69,44 @@ const TrashButton: React.FC<TrashButtonProps> = ({ isActive, onToggle }) => {
   );
 };
 
+const ReorderButton: React.FC<TrashButtonProps> = ({ isActive, onToggle }) => {
+  const colorClasses = isActive ? " bg-green-600" : " bg-gray-800";
+
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className={buttonBaseClasses + colorClasses}
+      aria-pressed={isActive}
+      aria-label="Delete pads"
+      title={isActive ? "배치모드" : "배치모드 해제"}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-6 h-6 text-white"
+      >
+        <line x1="4" y1="8" x2="20" y2="8" />
+        <line x1="4" y1="13" x2="20" y2="13" />
+        <line x1="4" y1="18" x2="20" y2="18" />
+      </svg>
+    </button>
+  );
+};
+
 export const PadGrid: React.FC<PadGridProps> = ({
   pads,
   onReorderPads,
   onRemovePad,
   isDeleteMode,
   onToggleDeleteMode,
+  isReorderMode,
+  onToggleReorderMode
 }) => {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -106,7 +144,10 @@ export const PadGrid: React.FC<PadGridProps> = ({
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
+      <Buttons>
       <TrashButton isActive={isDeleteMode} onToggle={onToggleDeleteMode} />
+      <ReorderButton isActive={isReorderMode} onToggle={onToggleReorderMode} />
+      </Buttons>
       <div className="flex flex-wrap gap-4 p-4">
         <SortableContext
           items={pads.map((pad) => pad.id)}
@@ -117,6 +158,7 @@ export const PadGrid: React.FC<PadGridProps> = ({
               key={pad.id}
               pad={pad}
               isDeleteMode={isDeleteMode}
+              isReorderMode={isReorderMode}
               onDeletePad={onRemovePad}
             />
           ))}

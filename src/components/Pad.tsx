@@ -4,13 +4,15 @@ import { useHowlerStore } from "../store/howlerStore";
 
 interface PadProps {
   pad: PadType;
-  isDeleteMode?: boolean;
-  onDeletePad?: (id: string) => void;
+  isDeleteMode: boolean;
+  isReorderMode: boolean;
+  onDeletePad: (id: string) => void;
 }
 
 export const Pad: React.FC<PadProps> = ({
   pad,
   isDeleteMode = false,
+  isReorderMode = false,
   onDeletePad,
 }) => {
   const playSound = useHowlerStore((state) => state.playSound);
@@ -42,6 +44,10 @@ export const Pad: React.FC<PadProps> = ({
       }
       return;
     }
+    
+    if(isReorderMode){
+      return;
+    }
 
     if (audioSrc) {
       playSound(audioSrc);
@@ -52,6 +58,8 @@ export const Pad: React.FC<PadProps> = ({
     "flex items-center justify-center rounded-lg shadow-md transition-all duration-150";
   const colorClasses = isDeleteMode
     ? "bg-red-700 text-white hover:bg-red-600 active:bg-red-800"
+    : isReorderMode
+    ? "text-white bg-green-600"
     : "bg-gray-700 text-white hover:bg-gray-600 active:bg-gray-800";
 
   return (

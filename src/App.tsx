@@ -13,6 +13,7 @@ export default function App() {
 
   const [showAddPadModal, setShowAddPadModal] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isReorderMode, setIsReorderMode] = useState(false);
 
   const handleAddPad = (label: string, audioUrl?: string, audioFile?: Blob) => {
     addPad({ label, audioUrl, audioFile, width: 100, height: 100 });
@@ -35,6 +36,12 @@ export default function App() {
 
   const handleToggleDeleteMode = () => {
     setIsDeleteMode((prev) => !prev);
+    setIsReorderMode(false);
+  };
+
+  const handleToggleReorderMode = () => {
+    setIsReorderMode((prev) => !prev);
+    setIsDeleteMode(false);
   };
 
   return (
@@ -46,6 +53,8 @@ export default function App() {
         onRemovePad={handleRemovePad}
         isDeleteMode={isDeleteMode}
         onToggleDeleteMode={handleToggleDeleteMode}
+        isReorderMode={isReorderMode}
+        onToggleReorderMode={handleToggleReorderMode}
       />
       <button
         onClick={() => setShowAddPadModal(true)}
