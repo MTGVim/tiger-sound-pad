@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { Pad as PadType } from "../types/pad";
 import { useHowlerStore } from "../store/howlerStore";
+import { twMerge } from "tailwind-merge";
 
 interface PadProps {
   pad: PadType;
@@ -82,7 +83,8 @@ export const Pad: React.FC<PadProps> = ({
 
       <button
         onClick={handleClick}
-        className="
+        className={twMerge(
+          `
           relative z-10
           rounded-full
           bg-linear-to-br from-zinc-800 to-zinc-900
@@ -95,7 +97,9 @@ export const Pad: React.FC<PadProps> = ({
           aspect-square
           break-all
           text-sm md:text-base lg:text-lg p-2
-        "
+        `,
+          isPlaying && "animate-spin-slow",
+        )}
       >
         {pad.label}
       </button>
