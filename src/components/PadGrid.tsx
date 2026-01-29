@@ -7,6 +7,7 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
+  TouchSensor,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -38,7 +39,17 @@ export const PadGrid: React.FC<PadGridProps> = ({
   onToggleReorderMode
 }) => {
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // 살짝 움직여야 드래그 시작
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150, // 롱프레스
+        tolerance: 5,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
