@@ -31,7 +31,6 @@ export default function App() {
 
   const handleRemovePad = (id: string) => {
     removePad(id);
-    setIsDeleteMode(false);
   };
 
   const handleToggleDeleteMode = () => {
@@ -45,8 +44,7 @@ export default function App() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray-900 text-white">
-      <h1 className="text-4xl font-bold mb-8">Tiger Sound Pad</h1>
+    <main className="flex min-h-screen flex-col items-center justify-between bg-gray-900 text-white">
       <PadGrid
         pads={pads}
         onReorderPads={handleReorder}
@@ -72,4 +70,3 @@ export default function App() {
     </main>
   );
 }
-
