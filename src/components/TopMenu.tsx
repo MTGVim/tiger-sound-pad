@@ -7,7 +7,7 @@ const isIOS =
   /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
 
 const buttonBaseClasses =
-  "flex items-center justify-center w-16 gap-4 h-12 rounded-full shadow-lg border border-gray-500 cursor-pointer transition-colors";
+  "flex items-center justify-center text-xs lg:text-base w-12 lg:w-16 gap-4 h-12 rounded-full shadow-lg border border-gray-500 cursor-pointer transition-colors";
 
 interface ToggleButtonProps {
   isActive: boolean;
@@ -196,8 +196,6 @@ export const TopMenu = ({
           isActive={isReorderMode}
           onToggle={onToggleReorderMode}
         />
-      </ButtonLayout>
-      <ButtonLayout className="mt-8">
         <StopButton />
       </ButtonLayout>
     </div>

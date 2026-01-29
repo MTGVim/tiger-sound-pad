@@ -96,7 +96,7 @@ export const Pad: React.FC<PadProps> = ({
           w-[140px] max-w-[30vw]
           aspect-square
           break-all
-          text-sm md:text-base lg:text-lg p-2
+          text-xs md:text-base lg:text-lg p-2
         `,
           isPlaying && "animate-spin-slow",
         )}
