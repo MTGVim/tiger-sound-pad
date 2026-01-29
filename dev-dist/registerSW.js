@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/tiger-sound-pad/dev-sw.js?dev-sw', { scope: '/tiger-sound-pad/', type: 'classic' })
