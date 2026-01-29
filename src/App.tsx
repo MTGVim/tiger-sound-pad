@@ -54,19 +54,22 @@ export default function App() {
         isReorderMode={isReorderMode}
         onToggleReorderMode={handleToggleReorderMode}
       />
-      <button
-        onClick={() => setShowAddPadModal(true)}
-        className="sticky bottom-4 mt-8 p-2 m-4 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors z-30"
-      >
-        Add New Pad
-      </button>
 
-      {showAddPadModal && (
-        <AddPadModal
-          onClose={() => setShowAddPadModal(false)}
-          onAddPad={handleAddPad}
-        />
-      )}
+      <div className="sticky bottom-4">
+        <button
+          onClick={() => setShowAddPadModal(true)}
+          className="mt-8 p-2 m-4 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors z-30"
+        >
+          버튼 추가
+        </button>
+
+        {showAddPadModal && (
+          <AddPadModal
+            onClose={() => setShowAddPadModal(false)}
+            onAddPad={handleAddPad}
+          />
+        )}
+      </div>
     </main>
   );
 }

@@ -2,6 +2,9 @@ import { PropsWithChildren, useRef, useState } from "react";
 import { usePadStore } from "../store/padStore";
 import { twMerge } from "tailwind-merge";
 import { useHowlerStore } from "../store/howlerStore";
+// iOS 여부 확인
+const isIOS =
+  /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
 
 const buttonBaseClasses =
   "flex items-center justify-center w-16 gap-4 h-12 rounded-full shadow-lg border border-gray-500 cursor-pointer transition-colors";
@@ -185,7 +188,7 @@ export const TopMenu = ({
   return (
     <div className="sticky top-0 py-4 z-20 w-full px-4 h-auto pt-4 bg-gray-900">
       <ButtonLayout>
-        <VolumeControl />
+        {!isIOS && <VolumeControl />}
         <SaveButton />
         <LoadButton />
         <TrashButton isActive={isDeleteMode} onToggle={onToggleDeleteMode} />
