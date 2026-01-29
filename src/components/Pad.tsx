@@ -81,8 +81,7 @@ export const Pad: React.FC<PadProps> = ({
       )}
 
       <button
-        onPointerDown={handleClick}
-        style={{ width: pad.width, height: pad.height }}
+        onClick={handleClick}
         className="
           relative z-10
           rounded-full
@@ -92,6 +91,10 @@ export const Pad: React.FC<PadProps> = ({
           active:translate-y-[2px] active:scale-[0.98]
           line-clamp-3
           text-center
+          w-[140px] max-w-[30vw]
+          aspect-square
+          break-all
+          text-sm
         "
       >
         {pad.label}

@@ -13,6 +13,7 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   horizontalListSortingStrategy,
+  rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import type { Pad as PadType } from "../types/pad";
 import { SortablePad } from "./SortablePad";
@@ -28,7 +29,6 @@ interface PadGridProps {
   onToggleReorderMode: () => void;
 }
 
-
 export const PadGrid: React.FC<PadGridProps> = ({
   pads,
   onReorderPads,
@@ -36,23 +36,22 @@ export const PadGrid: React.FC<PadGridProps> = ({
   isDeleteMode,
   onToggleDeleteMode,
   isReorderMode,
-  onToggleReorderMode
+  onToggleReorderMode,
 }) => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8, // 살짝 움직여야 드래그 시작
-      },
+      activationConstraint: { distance: 8 },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 150, // 롱프레스
+        delay: 150,
         tolerance: 5,
+        allowTouchMove: true, // 터치 스크롤 허용
       },
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -90,10 +89,10 @@ export const PadGrid: React.FC<PadGridProps> = ({
         onToggleDeleteMode={onToggleDeleteMode}
         onToggleReorderMode={onToggleReorderMode}
       />
-      <div className="flex flex-wrap gap-4 p-4 items-center justify-center">
+      <div className="grid grid-cols-4 gap-6 py-4 px-8 items-center justify-center">
         <SortableContext
           items={pads.map((pad) => pad.id)}
-          strategy={horizontalListSortingStrategy}
+          strategy={rectSortingStrategy}
         >
           {pads.map((pad) => (
             <SortablePad
@@ -109,4 +108,3 @@ export const PadGrid: React.FC<PadGridProps> = ({
     </DndContext>
   );
 };
-
