@@ -89,12 +89,12 @@ export const Pad: React.FC<PadProps> = ({
           text-white
           shadow-[0_6px_12px_rgba(0,0,0,0.45)]
           active:translate-y-[2px] active:scale-[0.98]
-          line-clamp-3
+          line-clamp-2
           text-center
           w-[140px] max-w-[30vw]
           aspect-square
           break-all
-          text-sm
+          text-sm md:text-base lg:text-lg p-2
         "
       >
         {pad.label}
