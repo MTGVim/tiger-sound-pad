@@ -3,12 +3,21 @@ import { Howl } from "howler";
 
 interface HowlerState {
   currentSound: Howl | null;
+  volume: number;
+  setVolume: (v: number) => void;
   playSound: (url: string, onEnd?: () => void) => void;
   stopSound: () => void;
 }
 
 export const useHowlerStore = create<HowlerState>((set, get) => ({
   currentSound: null,
+  volume: 1,
+
+  setVolume: (v) => {
+    Howler.volume(v);
+    set({ volume: v });
+  },
+
   playSound: (url: string, onEnd?: () => void) => {
     const { currentSound } = get();
 

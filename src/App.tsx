@@ -56,7 +56,7 @@ export default function App() {
       />
       <button
         onClick={() => setShowAddPadModal(true)}
-        className="mt-8 px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+        className="sticky bottom-4 mt-8 p-2 m-4 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors z-30"
       >
         Add New Pad
       </button>
