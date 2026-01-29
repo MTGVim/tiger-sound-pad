@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-기본적으로 `http://localhost:5173` 에서 앱을 확인할 수 있습니다(일반적인 Vite 기본 포트).
+기본적으로 `http://localhost:3000` 에서 앱을 확인할 수 있습니다(일반적인 Vite 기본 포트).
 
 ## 주요 기능
 
