@@ -16,7 +16,7 @@ export default function App() {
   const [isReorderMode, setIsReorderMode] = useState(false);
 
   const handleAddPad = (label: string, audioUrl?: string, audioFile?: Blob) => {
-    addPad({ label, audioUrl, audioFile, width: 100, height: 100 });
+    addPad({ label, audioUrl, audioFile });
     setShowAddPadModal(false);
   };
 

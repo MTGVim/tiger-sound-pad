@@ -12,6 +12,4 @@ export interface Pad {
    * This is NOT persisted (Blob is not JSON-serializable).
    */
   audioFile?: Blob;
-  width: number;
-  height: number;
 }
