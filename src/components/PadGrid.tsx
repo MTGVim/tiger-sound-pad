@@ -89,7 +89,7 @@ export const PadGrid: React.FC<PadGridProps> = ({
         onToggleDeleteMode={onToggleDeleteMode}
         onToggleReorderMode={onToggleReorderMode}
       />
-      <div className="grid grid-cols-4 gap-6 py-4 px-8 items-center justify-center">
+      <div className="grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6 py-4 px-8 items-center justify-center">
         <SortableContext
           items={pads.map((pad) => pad.id)}
           strategy={rectSortingStrategy}
