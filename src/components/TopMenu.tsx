@@ -1,4 +1,4 @@
-import { PropsWithChildren, useRef } from "react";
+import { PropsWithChildren, useRef, useState } from "react";
 import { usePadStore } from "../store/padStore";
 import { twMerge } from "tailwind-merge";
 import { useHowlerStore } from "../store/howlerStore";
@@ -23,6 +23,54 @@ const ButtonLayout: React.FC<PropsWithChildren & { className?: string }> = ({
       )}
     >
       {children}
+    </div>
+  );
+};
+
+const VolumeControl: React.FC = () => {
+  const { volume, setVolume } = useHowlerStore();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative">
+      {/* 버튼 */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className={twMerge(buttonBaseClasses, "bg-gray-800 flex-col gap-0")}
+        title="마스터 볼륨"
+      >
+        <div>{volume === 0 ? "🔇" : volume < 0.5 ? "🔉" : "🔊"}</div>
+        {Math.round(volume * 100)}%
+      </button>
+
+      {/* 슬라이더 */}
+      {open && (
+        <div
+          className="
+            absolute top-14 left-1/2 -translate-x-1/2
+            bg-gray-800 border border-gray-600
+            rounded-xl p-3 shadow-xl
+          "
+        >
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+            className="
+              h-32 w-2
+              appearance-none
+              bg-transparent
+              [writing-mode:vertical-rl]
+              rotate-180
+              accent-emerald-400
+            "
+          />
+        </div>
+      )}
     </div>
   );
 };
@@ -71,20 +119,7 @@ const ReorderButton: React.FC<ToggleButtonProps> = ({ isActive, onToggle }) => {
       aria-label="Delete pads"
       title={isActive ? "배치모드" : "배치모드 해제"}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-6 h-6 text-white"
-      >
-        <line x1="4" y1="8" x2="20" y2="8" />
-        <line x1="4" y1="13" x2="20" y2="13" />
-        <line x1="4" y1="18" x2="20" y2="18" />
-      </svg>
+      drag mode
     </button>
   );
 };
@@ -150,6 +185,7 @@ export const TopMenu = ({
   return (
     <div className="sticky top-0 py-4 z-20 w-full px-4 h-auto pt-4 bg-gray-900">
       <ButtonLayout>
+        <VolumeControl />
         <SaveButton />
         <LoadButton />
         <TrashButton isActive={isDeleteMode} onToggle={onToggleDeleteMode} />
