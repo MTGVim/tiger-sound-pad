@@ -6,16 +6,16 @@ import { twMerge } from "tailwind-merge";
 
 const buttonBaseClasses = "flex items-center justify-center w-16 gap-4 h-12 rounded-full shadow-lg border border-gray-500 cursor-pointer transition-colors";
 
-interface TrashButtonProps {
+interface ToggleButtonProps {
     isActive: boolean;
     onToggle: () => void;
-  }
+}
   
   const ButtonLayout: React.FC<PropsWithChildren> = ({children}) => {
     return <div className="flex flex-row gap-3 items-center justify-center fixed top-4 right-4 z-20 h-12">{children}</div>
   }
   
-  const TrashButton: React.FC<TrashButtonProps> = ({ isActive, onToggle }) => {
+  const TrashButton: React.FC<ToggleButtonProps> = ({ isActive, onToggle }) => {
     const colorClasses = isActive ? " bg-red-600" : " bg-gray-800";
   
     return (
@@ -47,7 +47,7 @@ interface TrashButtonProps {
     );
   };
   
-  const ReorderButton: React.FC<TrashButtonProps> = ({ isActive, onToggle }) => {
+  const ReorderButton: React.FC<ToggleButtonProps> = ({ isActive, onToggle }) => {
     const colorClasses = isActive ? " bg-green-600" : " bg-gray-800";
   
     return (

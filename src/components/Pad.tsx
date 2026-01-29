@@ -68,14 +68,9 @@ export const Pad: React.FC<PadProps> = ({
       style={{ width: pad.width, height: pad.height }}
       onClick={handleClick}
     >
-      {pad.label && <span>{pad.label}</span>}
-      {pad.iconUrl && (
-        <img
-          src={pad.iconUrl}
-          alt={pad.label || "pad icon"}
-          className="w-8 h-8"
-        />
-      )}
+      <div className="w-full p-2 break-all">
+        {pad.label && <span>{pad.label}</span>}
+      </div>
     </button>
   );
 };

@@ -1,7 +1,6 @@
 export interface Pad {
   id: string;
   label?: string;
-  iconUrl?: string;
   audioUrl?: string;
   /**
    * Key used to look up the audio Blob in IndexedDB.
@@ -15,7 +14,4 @@ export interface Pad {
   audioFile?: Blob;
   width: number;
   height: number;
-  x?: number;
-  y?: number;
 }
-
