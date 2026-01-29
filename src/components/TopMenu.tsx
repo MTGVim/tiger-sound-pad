@@ -1,6 +1,7 @@
 import { PropsWithChildren, useRef } from "react";
 import { usePadStore } from "../store/padStore";
 import { twMerge } from "tailwind-merge";
+import { useHowlerStore } from "../store/howlerStore";
 
 
 
@@ -11,8 +12,8 @@ interface ToggleButtonProps {
     onToggle: () => void;
 }
   
-  const ButtonLayout: React.FC<PropsWithChildren> = ({children}) => {
-    return <div className="flex flex-row gap-3 items-center justify-center fixed top-4 right-4 z-20 h-12">{children}</div>
+  const ButtonLayout: React.FC<PropsWithChildren & {className?: string}> = ({children, className}) => {
+    return <div className={twMerge("flex flex-row flex-wrap gap-3 items-center justify-center min-h-12 mt-3", className)}>{children}</div>
   }
   
   const TrashButton: React.FC<ToggleButtonProps> = ({ isActive, onToggle }) => {
@@ -105,6 +106,14 @@ interface ToggleButtonProps {
     );
   }
 
+  const StopButton: React.FC = () => {
+    const {stopSound} = useHowlerStore();
+    return (<div className={twMerge(buttonBaseClasses," flex-col bg-gray-800 gap-0")} onClick={() => stopSound()}>
+      <div>⏹️</div>STOP!
+      </div>
+    );
+  }
+
   export const TopMenu = ({
     isDeleteMode,
     isReorderMode,
@@ -116,10 +125,15 @@ interface ToggleButtonProps {
     isReorderMode: boolean;
     onToggleReorderMode: () => void;
   }) => {
-    return <ButtonLayout>
-      <TrashButton isActive={isDeleteMode} onToggle={onToggleDeleteMode} />
-      <ReorderButton isActive={isReorderMode} onToggle={onToggleReorderMode} />
-      <SaveButton />
-      <LoadButton />
-    </ButtonLayout>
+    return<div className="sticky top-0 py-4 z-20 w-full px-4 h-auto pt-4 bg-gray-900">
+      <ButtonLayout>
+        <SaveButton />
+        <LoadButton />
+        <TrashButton isActive={isDeleteMode} onToggle={onToggleDeleteMode} />
+        <ReorderButton isActive={isReorderMode} onToggle={onToggleReorderMode} />
+      </ButtonLayout>
+      <ButtonLayout className="mt-8">
+        <StopButton/>
+      </ButtonLayout>
+    </div>
   }
