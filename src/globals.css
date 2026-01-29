@@ -10,6 +10,14 @@
     50% { transform: scale(1.12); opacity: 1; }
     100% { transform: scale(1); opacity: 0.4; }
   }
+  
+  /* 느린 회전 애니메이션 정의 */
+  --animate-spin-slow: spinSlow 2s linear infinite;
+
+  @keyframes spinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 }
 
 :root {
