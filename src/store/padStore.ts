@@ -9,9 +9,12 @@ import {
   set as idbSet,
   del as idbDel,
   createStore,
+  clear as idbClear,
+  keys,
 } from "idb-keyval";
 import type { Pad } from "../types/pad";
-
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 import { v4 as uuidv4 } from "uuid";
 
 const generateId = () => uuidv4();
@@ -23,6 +26,12 @@ interface PadState {
   updatePad: (id: string, newPad: Partial<Pad>) => void;
   reorderPads: (newPads: Pad[]) => void;
   loadAudioFiles: () => Promise<void>;
+
+  /** 📦 export */
+  exportToZip: () => Promise<void>;
+
+  /** 📥 import */
+  importFromZip: (file: File) => Promise<void>;
 }
 
 // Store for persisted JSON (pads list)
@@ -106,7 +115,7 @@ export const usePadStore = create<PadState>()(
                   ...newPad,
                   localAudioId: localAudioId ?? pad.localAudioId,
                 }
-              : pad
+              : pad,
           ),
         }));
       },
@@ -128,10 +137,89 @@ export const usePadStore = create<PadState>()(
               ...pad,
               audioFile: blob as Blob,
             };
-          })
+          }),
         );
 
         set({ pads: updatedPads });
+      },
+      exportToZip: async () => {
+        const zip = new JSZip();
+        const { pads } = get();
+
+        // 1️⃣ pads JSON
+        zip.file(
+          "data/pads.json",
+          JSON.stringify(
+            pads.map(({ audioFile, ...rest }) => rest),
+            null,
+            2,
+          ),
+        );
+
+        // 2️⃣ audio blobs
+        for (const pad of pads) {
+          if (!pad.localAudioId) continue;
+
+          const blob = await idbGet(pad.localAudioId, audioStore);
+          if (!blob) continue;
+
+          zip.file(`assets/audio/${pad.localAudioId}.mp3`, blob);
+        }
+
+        // 3️⃣ meta
+        zip.file(
+          "meta.json",
+          JSON.stringify(
+            {
+              version: 1,
+              exportedAt: new Date().toISOString(),
+            },
+            null,
+            2,
+          ),
+        );
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        saveAs(zipBlob, "pad-backup.zip");
+      },
+      importFromZip: async (file: File) => {
+        const zip = await JSZip.loadAsync(file);
+
+        /* 1️⃣ pads.json 로드 */
+        const padsEntry = zip.file("data/pads.json");
+        if (!padsEntry) {
+          throw new Error("Invalid backup file: pads.json not found");
+        }
+
+        const padsJson = await padsEntry.async("string");
+        const pads: Pad[] = JSON.parse(padsJson);
+
+        /* 2️⃣ audioStore 초기화 */
+        await idbClear(audioStore);
+
+        /* 3️⃣ audio blobs 복원 */
+        const audioTasks: Promise<void>[] = [];
+
+        zip.forEach((path, entry) => {
+          if (!path.startsWith("assets/audio/") || entry.dir) return;
+
+          const fileName = path.replace("assets/audio/", "");
+          const localAudioId = fileName.replace(/\.mp3$/, "");
+
+          audioTasks.push(
+            entry
+              .async("blob")
+              .then((blob) => idbSet(localAudioId, blob, audioStore)),
+          );
+        });
+
+        await Promise.all(audioTasks);
+
+        /* 4️⃣ pads 상태 반영 */
+        set({ pads });
+        console.log("audioStore keys:", await keys(audioStore));
+        /* 5️⃣ Blob → audioFile 주입 */
+        await get().loadAudioFiles();
       },
     }),
     {
@@ -142,7 +230,7 @@ export const usePadStore = create<PadState>()(
         pads: state.pads.map(
           ({ audioFile: _audioFile, ...rest }): Pad => ({
             ...rest,
-          })
+          }),
         ),
       }),
       onRehydrateStorage: () => (state) => {
@@ -150,7 +238,6 @@ export const usePadStore = create<PadState>()(
           void state.loadAudioFiles();
         }
       },
-    }
-  )
+    },
+  ),
 );
-

@@ -31,7 +31,6 @@ export default function App() {
 
   const handleRemovePad = (id: string) => {
     removePad(id);
-    setIsDeleteMode(false);
   };
 
   const handleToggleDeleteMode = () => {
