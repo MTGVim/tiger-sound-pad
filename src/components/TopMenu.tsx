@@ -186,7 +186,10 @@ export const TopMenu = ({
   onToggleReorderMode: () => void;
 }) => {
   return (
-    <div className="sticky top-0 py-4 z-20 w-full px-4 h-auto pt-4 bg-gray-900">
+    <div
+      className="sticky top-0 py-4 z-20 w-full px-4 h-auto pt-4 
+            bg-linear-to-b from-gray-800/80 to-from-gray-800/0 to-transparent"
+    >
       <ButtonLayout>
         {!isIOS && <VolumeControl />}
         <SaveButton />

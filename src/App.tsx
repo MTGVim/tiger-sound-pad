@@ -55,10 +55,13 @@ export default function App() {
         onToggleReorderMode={handleToggleReorderMode}
       />
 
-      <div className="sticky bottom-4 z-30">
+      <div
+        className="sticky bottom-0 z-30 w-full flex items-center justify-center
+            bg-linear-to-t from-gray-800/80 to-from-gray-800/0"
+      >
         <button
           onClick={() => setShowAddPadModal(true)}
-          className="mt-8 p-2 m-4 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+          className="p-2 mb-8 m-4 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
         >
           버튼 추가
         </button>
