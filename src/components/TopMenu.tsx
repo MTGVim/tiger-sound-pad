@@ -162,6 +162,19 @@ const LoadButton: React.FC = () => {
   );
 };
 
+const LoadDefaultButton: React.FC = () => {
+  const { importDefaultZip } = usePadStore();
+  return (
+    <div
+      className={twMerge(buttonBaseClasses, " flex-col bg-gray-800 gap-0")}
+      onClick={() => importDefaultZip()}
+      title="기본 추천 패드 불러오기"
+    >
+      <div>⭐</div>DEFAULT
+    </div>
+  );
+};
+
 const StopButton: React.FC = () => {
   const { stopSound } = useHowlerStore();
   return (
@@ -194,6 +207,7 @@ export const TopMenu = ({
         {!isIOS && <VolumeControl />}
         <SaveButton />
         <LoadButton />
+        <LoadDefaultButton />
         <TrashButton isActive={isDeleteMode} onToggle={onToggleDeleteMode} />
         <ReorderButton
           isActive={isReorderMode}
