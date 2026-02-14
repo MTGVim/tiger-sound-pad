@@ -1,4 +1,5 @@
 ## Tiger Sound Pad
+<img width="656" height="869" alt="스크린샷 2026-02-14 오전 11 24 53" src="https://github.com/user-attachments/assets/536d6515-a515-4932-9866-3976674f4cf5" />
 
 간단한 사운드 패드를 제공하는 React + Vite 기반 앱입니다. 각 패드에는 라벨과 아이콘, 오디오를 연결할 수 있으며, 드래그해서 순서를 바꾸거나 삭제할 수 있습니다.
 
