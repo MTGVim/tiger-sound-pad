@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Howl } from "howler";
+import { Howl, Howler } from "howler";
 
 interface HowlerState {
   currentSound: {
@@ -28,6 +28,7 @@ export const useHowlerStore = create<HowlerState>((set, get) => ({
     // 기존 사운드가 있으면 stop + 기존 onEnd 호출
     if (currentSound) {
       currentSound.handle.stop();
+      currentSound.handle.unload();
       if (currentSound.url !== url) {
         currentSound.onEnd?.();
       }
@@ -59,8 +60,18 @@ export const useHowlerStore = create<HowlerState>((set, get) => ({
     const { currentSound } = get();
     if (currentSound) {
       currentSound.handle?.stop();
+      currentSound.handle?.unload();
       currentSound.onEnd?.();
       set({ currentSound: null });
+    }
+
+    // Ensure any orphaned Howler instances are released.
+    Howler.stop();
+    Howler.unload();
+
+    if (typeof navigator !== "undefined" && "mediaSession" in navigator) {
+      navigator.mediaSession.playbackState = "none";
+      navigator.mediaSession.metadata = null;
     }
   },
 }));

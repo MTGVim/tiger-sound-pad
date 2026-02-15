@@ -3,6 +3,7 @@ import { usePadStore } from "./store/padStore";
 import { PadGrid } from "./components/PadGrid";
 import { AddPadModal } from "./components/AddPadModal";
 import type { Pad } from "./types/pad";
+import { useHowlerStore } from "./store/howlerStore";
 
 export default function App() {
   const pads = usePadStore((state) => state.pads);
@@ -10,6 +11,7 @@ export default function App() {
   const reorderPads = usePadStore((state) => state.reorderPads);
   const loadAudioFiles = usePadStore((state) => state.loadAudioFiles);
   const removePad = usePadStore((state) => state.removePad);
+  const stopSound = useHowlerStore((state) => state.stopSound);
 
   const [showAddPadModal, setShowAddPadModal] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
@@ -24,6 +26,24 @@ export default function App() {
     // Load audio blobs for pads that reference local files
     void loadAudioFiles();
   }, [loadAudioFiles]);
+
+  useEffect(() => {
+    const stopOnBackground = () => {
+      if (document.visibilityState === "hidden") {
+        stopSound();
+      }
+    };
+
+    const stopOnPageHide = () => stopSound();
+
+    document.addEventListener("visibilitychange", stopOnBackground);
+    window.addEventListener("pagehide", stopOnPageHide);
+
+    return () => {
+      document.removeEventListener("visibilitychange", stopOnBackground);
+      window.removeEventListener("pagehide", stopOnPageHide);
+    };
+  }, [stopSound]);
 
   const handleReorder = (newPads: Pad[]) => {
     reorderPads(newPads);

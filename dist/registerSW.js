@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/tiger-sound-pad/sw.js', { scope: '/tiger-sound-pad/' })})}
