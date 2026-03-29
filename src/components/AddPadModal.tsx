@@ -30,10 +30,21 @@ export const AddPadModal: React.FC<AddPadModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl font-bold mb-4">Add New Sound Pad</h2>
-        <form onSubmit={handleSubmit}>
+    <div
+      data-testid="add-pad-modal-backdrop"
+      className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="add-pad-modal-title"
+        data-testid="add-pad-modal"
+        className="bg-gray-800 p-6 rounded-lg shadow-lg w-96"
+      >
+        <h2 id="add-pad-modal-title" className="text-xl font-bold mb-4">
+          Add New Sound Pad
+        </h2>
+        <form data-testid="add-pad-form" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="label"
@@ -44,6 +55,7 @@ export const AddPadModal: React.FC<AddPadModalProps> = ({
             <input
               type="text"
               id="label"
+              data-testid="pad-label-input"
               className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white"
               value={label}
               onChange={(e) => setLabel(e.target.value)}
@@ -60,6 +72,7 @@ export const AddPadModal: React.FC<AddPadModalProps> = ({
             <input
               type="url"
               id="audioUrl"
+              data-testid="pad-audio-url-input"
               className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white"
               value={audioUrl}
               onChange={(e) => {
@@ -79,6 +92,7 @@ export const AddPadModal: React.FC<AddPadModalProps> = ({
             <input
               type="file"
               id="audioFile"
+              data-testid="pad-audio-file-input"
               accept="audio/*"
               className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white"
               onChange={handleFileChange}
@@ -89,12 +103,14 @@ export const AddPadModal: React.FC<AddPadModalProps> = ({
             <button
               type="button"
               onClick={onClose}
+              data-testid="cancel-add-pad"
               className="px-4 py-2 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
+              data-testid="submit-add-pad"
               className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
             >
               Add Pad
@@ -105,4 +121,3 @@ export const AddPadModal: React.FC<AddPadModalProps> = ({
     </div>
   );
 };
-

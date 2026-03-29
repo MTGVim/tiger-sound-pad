@@ -64,9 +64,16 @@ export const Pad: React.FC<PadProps> = ({
   };
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div
+      className="relative flex items-center justify-center"
+      data-testid="sound-pad"
+      data-pad-id={pad.id}
+      data-pad-label={pad.label ?? ""}
+      data-playing={isPlaying ? "true" : "false"}
+    >
       {showPulse && (
         <div
+          data-testid="sound-pad-pulse"
           className={`
             absolute
             w-[114%] aspect-square
@@ -83,6 +90,10 @@ export const Pad: React.FC<PadProps> = ({
 
       <button
         onClick={handleClick}
+        data-testid="sound-pad-button"
+        data-playing={isPlaying ? "true" : "false"}
+        aria-label={pad.label ? `${pad.label} sound pad` : "Sound pad"}
+        aria-pressed={isPlaying}
         className={twMerge(
           `
           relative z-10

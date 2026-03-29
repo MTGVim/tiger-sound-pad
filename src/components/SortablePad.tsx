@@ -26,6 +26,9 @@ export const SortablePad: React.FC<SortablePadProps> = ({
   return (
     <div
       ref={setNodeRef}
+      data-testid="sortable-pad"
+      data-pad-id={pad.id}
+      data-pad-label={pad.label ?? ""}
       style={{
         transform: CSS.Transform.toString(transform),
         transition,

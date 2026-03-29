@@ -81,6 +81,7 @@ export default function App() {
       >
         <button
           onClick={() => setShowAddPadModal(true)}
+          data-testid="open-add-pad-modal"
           className="p-2 mb-8 m-4 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
         >
           버튼 추가

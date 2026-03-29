@@ -85,6 +85,7 @@ const TrashButton: React.FC<ToggleButtonProps> = ({ isActive, onToggle }) => {
     <button
       type="button"
       onClick={onToggle}
+      data-testid="delete-mode-button"
       className={buttonBaseClasses + colorClasses}
       aria-pressed={isActive}
       aria-label="Delete pads"
@@ -117,9 +118,10 @@ const ReorderButton: React.FC<ToggleButtonProps> = ({ isActive, onToggle }) => {
     <button
       type="button"
       onClick={onToggle}
+      data-testid="reorder-mode-button"
       className={buttonBaseClasses + colorClasses}
       aria-pressed={isActive}
-      aria-label="Delete pads"
+      aria-label="Reorder pads"
       title={isActive ? "배치모드" : "배치모드 해제"}
     >
       drag mode
@@ -131,6 +133,7 @@ const SaveButton: React.FC = () => {
   const { exportToZip } = usePadStore();
   return (
     <div
+      data-testid="save-pads-button"
       className={twMerge(buttonBaseClasses, " flex-col bg-gray-800 gap-0")}
       onClick={() => exportToZip()}
     >
@@ -144,12 +147,14 @@ const LoadButton: React.FC = () => {
   const { importFromZip } = usePadStore();
   return (
     <div
+      data-testid="load-pads-button"
       className={twMerge(buttonBaseClasses, " flex-col bg-gray-800 gap-0")}
       onClick={() => inputRef?.current?.click()}
     >
       <div>📥</div>LOAD
       <input
         type="file"
+        data-testid="load-pads-input"
         className="hidden"
         accept=".zip"
         ref={inputRef}
@@ -166,6 +171,7 @@ const LoadDefaultButton: React.FC = () => {
   const { importDefaultZip } = usePadStore();
   return (
     <div
+      data-testid="load-default-pads-button"
       className={twMerge(buttonBaseClasses, " flex-col bg-gray-800 gap-0")}
       onClick={() => importDefaultZip()}
       title="기본 추천 패드 불러오기"
@@ -179,6 +185,7 @@ const StopButton: React.FC = () => {
   const { stopSound } = useHowlerStore();
   return (
     <div
+      data-testid="stop-sound-button"
       className={twMerge(buttonBaseClasses, " flex-col bg-gray-800 gap-0")}
       onClick={() => stopSound()}
     >
@@ -200,6 +207,7 @@ export const TopMenu = ({
 }) => {
   return (
     <div
+      data-testid="top-menu"
       className="sticky top-0 py-4 z-20 w-full px-4 h-auto pt-4 
             bg-linear-to-b from-gray-800/80 to-from-gray-800/0 to-transparent"
     >

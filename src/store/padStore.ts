@@ -227,7 +227,10 @@ export const usePadStore = create<PadState>()(
           await restoreFromZip(zip);
         },
         importDefaultZip: async () => {
-          const response = await fetch("/pad-recommend.zip");
+          const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+            ? import.meta.env.BASE_URL
+            : `${import.meta.env.BASE_URL}/`;
+          const response = await fetch(`${baseUrl}pad-recommend.zip`);
           if (!response.ok) {
             throw new Error("Failed to load default pad zip");
           }
