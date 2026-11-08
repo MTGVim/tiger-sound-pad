@@ -45,5 +45,10 @@
     "typescript": "^5",
     "vite": "^6.0.0",
     "vite-plugin-pwa": "^1.2.0"
+  },
+  "overrides": {
+    "workbox-build": {
+      "glob": "^14.0.2"
+    }
   }
 }
